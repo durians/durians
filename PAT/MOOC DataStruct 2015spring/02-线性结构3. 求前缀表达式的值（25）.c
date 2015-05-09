@@ -1,8 +1,5 @@
 //http://www.patest.cn/contests/mooc-ds/02-%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%843
 // + + 2 * 3 - 7 4 / 8 4 =  2 + 3 *(7 - 4) + 8/4 = 13.0
-// + ERROR
-// +123 
-// 12 34 ERROR
 
 #include<stdio.h>
 #include<stdlib.h>
