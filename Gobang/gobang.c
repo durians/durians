@@ -1,3 +1,4 @@
+////棋子 ● ○
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -93,13 +94,6 @@ int main()
     init();
     
     play();
-
-    FILE *fp;
-    char buffer[90];
-    fp = popen("~/test.sh","r");
-    fgets(buffer,sizeof(buffer),fp);
-    printf("%s",buffer);
-    fclose(fp);
     
 	return 0;
 }
