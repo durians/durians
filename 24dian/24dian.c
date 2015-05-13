@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
  a1 op1 a2 op2 a3 op3 a4
@@ -153,12 +154,19 @@ int calc24(int a[4])
     return 0;
 }
 
-
-int main()
+int main(int argc, char *argv[])
 {
     int a[4];
-    
-    scanf("%d %d %d %d", a, a+1, a+2, a+3);
+    if(argc >= 5)
+    {
+        a[0] = atoi(argv[1]);
+        a[1] = atoi(argv[2]);
+        a[2] = atoi(argv[3]);
+        a[3] = atoi(argv[4]);
+    }
+    else {
+        scanf("%d %d %d %d", a, a+1, a+2, a+3);
+    }
     
     if( !calc24(a) ) printf("-1\n");
     
