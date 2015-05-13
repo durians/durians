@@ -1,7 +1,6 @@
 
-**[TwoSum][000]**
+**[TwoSum][000]**    *hash*
 
-*hash*
 >1.数组直接哈希[AC](TwoSum.c)，考虑到负数，映射为：(unsigned int)(key)%HASH_MAX_SIZE
 >
 >2.用开源的C语言hash库[AC](TwoSum-test.c)，[uthash.h][hash]（这个在leetcode中默认包含）
@@ -12,9 +11,7 @@
 
 
 
-**[LargestNumber][179]**
-
-*排序*
+**[LargestNumber][179]**  *排序*
 
 >1.把输入整数，转成字符串，排序[AC](largestnumber.c)
 >
