@@ -1,4 +1,20 @@
 //http://www.patest.cn/contests/mooc-ds2015spring/02-线性结构3
+
+/*
+//题意：判断一个序列是否可由栈操作得到
+ 
+ M (the maximum capacity of the stack)
+ N (the length of push sequence)
+ K (the number of pop sequences to be checked).
+ 
+5 7 5
+1 2 3 4 5 6 7
+3 2 1 7 5 6 4
+7 6 5 4 3 2 1
+5 6 4 3 7 2 1
+1 7 6 5 4 3 2
+*/
+
 #include <stdio.h>
 
 int checkSequence(int order[], int n ,int stack_size)
@@ -18,6 +34,7 @@ int checkSequence(int order[], int n ,int stack_size)
     }
     return (i == n) ? 1 : 0;
 }
+
 int main(int argc, char *argv[]) 
 {
     int M, N, K;

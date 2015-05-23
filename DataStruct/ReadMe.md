@@ -1,13 +1,41 @@
 #数据结构
 
+##OJ
+
+静态链表：
+[Reversing Linked List](MOOC-DataStruct2015spring/02-线性结构2.ReversingLinkedList.c)
+
+双链表：
+[祖玛(Zuma)](TsinghuaX－30240184X/MOOC-PA1/Zuma.c)
+
+排序＋二分查找：
+[范围查询(Range)](TsinghuaX－30240184X/MOOC-PA1/range_A.c)
+
+排序＋求逆序数
+[灯塔(LightHouse)](TsinghuaX－30240184X/MOOC-PA1/LightHouse.c)
+
+栈的次序
+[列车调度(Train)](TsinghuaX－30240184X/MOOC-PA2/Train.c)
+[Pop Sequence](MOOC-DataStruct2015spring/02-线性结构3.PopSequence.c.c)
+
+二叉树
+
+
+
+##线性表
+
+
+
 
 **自我要求**
 
 > * 理解各基础数据结构
 > 
-> ![Abstrac Data Type](ADT/ADT.png)
+> ![Abstrac Data Type](res/ADT.png)
 > 
 > * 分别用C、C++语言实现各数据结构
+> 
+>   实现的算法、代码中犯过的错
 > 
 > * 使用各数据结构完成一定量的OJ题	
 > 
@@ -29,31 +57,6 @@
 >
 > * C没有&，表达起来真麻烦，每次都用指针，真是受够了。C++用& 代码就简洁多了。
 > 
-
-
-##线性表
-
-![](ADT/ADT线性表定义.png)
-
-**ADT定义:** 如上，基本操作：初始化、查找、插入、删除等
-
-**C语言表示与实现**
->
-> 线性表顺序存储实现: [SqList.c](SqList.c)
-> 
-> 线性表链式存储实现: [LinkList.c](LinkList.c)
-
-
-##vector
-![Abstrac Data Type](ADT/向量ADT接口.png)
-
-**ADT定义:** 顺序存储的线性表，是数组的抽象与泛化,部分操作接口定义，如图
-
-**C++实现:** [vector.h](vector.h)，比SqList.c使用起来更方便
-
-
-
-
 
 
 
