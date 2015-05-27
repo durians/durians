@@ -61,7 +61,6 @@ A->height = GetHeight(A->lchild) < GetHeight(A->rchild) ?
 B->height = GetHeight(B->lchild) < GetHeight(B->rchild) ? 
         GetHeight(B->rchild) +1: GetHeight(B->lchild) + 1;  
 
-//    A->height--;
     *pT = B;
     
 }

@@ -3,80 +3,95 @@
 
 typedef struct _node
 {
+    struct _node *left;
+    struct _node *right;
     int data;
-    struct _node *lchild;
-    struct _node *rchild;
-}*Tree;
+}*BinTree;
 
-void properRebuild(Tree *pR,int dlr[], int i, int j, int lrd[], int k, int f)
+void Create(BinTree *t, int preOrder[], int postOrder[], int n)
 {
-    int m,n;
+    struct _node *root;
+    int i = 0;
     
-    Tree r;
-    r = (struct _node*)malloc(sizeof(struct _node));
-    r->data = dlr[i];//lrd[f]
-    r->lchild = NULL, r->rchild = NULL;
+    if(n <= 0) return;
     
-    *pR = r;
+    //preOrder:  DL......R...... L[1,i+1) R[i+1,n)
+    //postOrder: ......L......RD L[0,i)   R[i,n-1)
+    root = (struct _node*)malloc(sizeof(struct _node));
+    root->data = preOrder[0], root->left = NULL, root->right = NULL;
+    *t = root;
+    if(n == 1) return ;
     
-    if(i == j && k == f)
-        return;
+    while(preOrder[1]!=postOrder[i++]);
+    //i++;
     
-    //lrd: L[k,m-1]  R[m, f-1]
-    m = k;
-    while(lrd[m++] != dlr[i+1]);//L
-    
-    //dlr: L[i+1,n] R[n+1, j]
-    n = j;
-    while(dlr[n--] != lrd[f-1]);//R
-    
-    properRebuild(&r->lchild,dlr,i+1,n,lrd,k,m-1);
-    properRebuild(&r->rchild,dlr,n+1,j,lrd,m,f-1);
+    Create(&(root->left), preOrder+1,   postOrder,i);
+    Create(&(root->right),preOrder+i+1, postOrder+i,n-i-1);
 }
-
-void visit(struct _node *r)
-{
-    printf("%d ", r->data);
-}
-
-void ldr(Tree r)
-{
-    if(r)
-    {
-        ldr(r->lchild);
-        visit(r);
-        ldr(r->rchild);
-        
-        free(r->rchild),r->rchild = NULL;
-        free(r->lchild),r->lchild = NULL;
-    }
-    
-}
-
-int main(int argc, char *argv[])
+#ifndef _OJ_
+void createBinTree(BinTree *t)
 {
     int n, i;
-    int *lrd, *dlr;
-    Tree r;
-    
     scanf("%d", &n);
     
-    dlr = (int *)malloc(sizeof(int)*n);
-    lrd = (int *)malloc(sizeof(int)*n);
+    int *preOrder =  (int *)malloc(sizeof(int)*n);
+    int *postOrder = (int *)malloc(sizeof(int)*n);
     
     for(i = 0; i < n; i++)
-        scanf("%d",dlr+i);
+        scanf("%d", preOrder+i);
     for(i = 0; i < n; i++)
-        scanf("%d",lrd+i);
+        scanf("%d",postOrder+i);
     
-    properRebuild(&r,dlr,0,n-1,lrd,0,n-1);
-    ldr(r);
+    Create(t,preOrder,postOrder,n);
     
-    free(dlr),dlr=NULL;
-    free(lrd),lrd=NULL;
+}
+#else
+char ioinbuf[1<<20];
+char iooutbuf[1<<20];
+void createBinTree(BinTree *t)
+{
+    setvbuf(stdin, ioinbuf, _IOFBF, 1 << 20);
+    setvbuf(stdout, iooutbuf, _IOFBF, 1 << 20);
+    
+    int n, i;
+    scanf("%d", &n);
+    
+    int *preOrder =  (int *)malloc(sizeof(int)*n);
+    int *postOrder = (int *)malloc(sizeof(int)*n);
+    
+    for(i = 0; i < n; i++)
+        scanf("%d", preOrder+i);
+    for(i = 0; i < n; i++)
+        scanf("%d",postOrder+i);
+    
+    Create(t,preOrder,postOrder,n);
+    
+}
+#endif // _OJ_
+
+
+void orderTraversal(BinTree t)
+{
+    if(t)
+    {
+        orderTraversal(t->left);
+        printf("%d ",t->data);
+        orderTraversal(t->right);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    
+    BinTree t;
+    
+    createBinTree(&t);
+    orderTraversal(t);
     
     return 0;
 }
+
+
+
 
 
 
