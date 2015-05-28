@@ -59,7 +59,7 @@ HuffmanTree DeleteMinHeap(MinHeap *H)
         // i, 2*i, 2*i+1
         
         if(2*i+1 <= H->size &&
-           H->elements[2*i+1]->weight <= H->elements[2*i]->weight &&
+           H->elements[2*i+1]->weight < H->elements[2*i]->weight &&
            H->elements[2*i+1]->weight < H->elements[i]->weight)
         {
             t = H->elements[2*i+1];

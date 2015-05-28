@@ -4,12 +4,57 @@
 
 
 
-##线性表
+##线性结构
+
+* 向量
+* 列表
+* 栈
+* 队列 
+* 串
 
 
-##二叉树
+##树结构
 
-* 存储
+* 动机
+		
+		1.树可以表示层次关系
+			表达式
+			文件系统
+			URL
+			... ...
+		
+		2.树能兼顾高效的操作
+			查找
+			插入、删除
+				
+* 树存储
+
+		1.父亲
+		typedef struct PTNode
+		{
+			int data;
+			int parent;
+		}PTNode;
+		
+		typedef struct PTree
+		{
+			PTNode nodes[MAX_TREE_SIZE];
+			int r;		//根的位置
+			int n;		//结点数
+		}PTree;
+		
+		适合找parent操作，eg: 并查集
+		
+		2.孩子
+		
+		
+		3.父亲＋孩子
+		
+		4.长子＋兄弟
+			树通过长子兄弟方式可转成二叉树
+		
+	
+* 二叉树存储
 
 		1.顺序存储
 		适合：完全二叉树、满二叉树存储.一般二叉树,浪费空间。
@@ -23,8 +68,6 @@
 			int data;
 			//...
 		}BiTNode,*BiTree;
-		
-		3.静态链表
 
 		
 * 遍历
@@ -66,10 +109,42 @@
 		平衡调整策略：
 		LL、LR、RR、RL
 		
-* 堆（优先队列 Priority Queue）
-[习题][树6]－[最小堆][树6AC]
+* 堆
+	
+	* [堆实现优先队列][heap.c]
+	* [堆排序][heapsort.c]
+	* [习题1][树6]－[建最小堆][树6AC]
+	* [习题2][poj 2431]－[最大堆运用][2431AC]  
+	* [习题3][poj 3253]－[最小堆运用][3253AC]
+	* [习题4][PA4-1]－[任务调度][PA4-1AC]
+
+	1. 优先队列（Priority Queue）定义 
+			
+			push  按优先级序列插入
+			pop   删除优先级最高的元素
+			top   查看优先级最高的元素
+			
+			C++ STL里有priority_queue
 		
-		完全二叉树结构，顺序存储。
+	2. 堆的定义
+		
+			  大堆：k[i] >= k[2*i]  k[i] >= k[2*i+1]
+			  小堆：k[i] <= k[2*i]  k[i] <= k[2*i+1]
+			  i = 1,2,...,n/2
+			  
+			  逻辑结构：完全二叉树结构
+			  存储结构：顺序存储
+			  
+			  操作：
+			  pushHeap  按优先级序列插入
+			  popHeap   删除优先级最高的元素
+			  topHeap   查看优先级最高的元素
+	
+	3. 堆实现优先队列
+					
+			操作系统按优先级调度算法(大堆)
+			Huffman编码算法（小堆）
+			
 		
 * ￼￼哈夫曼树（Huffman Tree）
 [习题][树8]－[Huffman Codes][树8AC]
@@ -92,12 +167,12 @@
 		前缀码，任何字符的编码都不是另一字符编码的前缀。
 		
 * 并查集
-[习题][树7]－[并查集][树7AC]
+[习题][树7]－[并查集练习][树7AC]
 
 		1.存储：
 		集合，森林结构，树根Root带表一个集合。双亲表示法，数组存储。
 		
-		typedef struct Set
+		typedef struct MFSet
 		{
 			//parent
 			// > 0  代表父结点
@@ -105,40 +180,13 @@
 			// < 0  代表根结点，负数表示该集合的元素个数
 			int parent;
 			int data;
-		}Set[N];
+		} MFSet[N];
 		
 		＃并
 		只需把一个集合的parent设为另一集合的Root即可
 		
 		# 查: 查找某个元素所在的集合（根结点Root）		
 
-[树1]:http://www.patest.cn/contests/mooc-ds2015spring/03-树1
-[树1AC]:MOOC-DataStruct2015spring/03-树1.ListLeaves(25).c
-
-[树2]:http://www.patest.cn/contests/mooc-ds2015spring/03-树2
-[树2AC]:MOOC-DataStruct2015spring/03-树2.TreeTraversalsAgain(25).c
-
-[树3]:http://www.patest.cn/contests/mooc-ds2015spring/04-树3
-[树3AC]:MOOC-DataStruct2015spring/04-树3.RootofAVLTree(25).c
-
-[树4]:http://www.patest.cn/contests/mooc-ds2015spring/04-树4
-[树4AC]:MOOC-DataStruct2015spring/
-
-[树5]:http://www.patest.cn/contests/mooc-ds2015spring/04-树5
-[树5AC]:MOOC-DataStruct2015spring/04-树5.CompleteBinarySearchTree(30).c
-
-[树6]:http://www.patest.cn/contests/mooc-ds2015spring/05-树6 
-[树6AC]:MOOC-DataStruct2015spring/05-树6.Path-in-a-Heap(25).c
-
-[树7]:http://www.patest.cn/contests/mooc-ds2015spring/05-树7
-[树7AC]:MOOC-DataStruct2015spring/05-树7.FileTransfer(25).c
-
-[树8]:http://www.patest.cn/contests/mooc-ds2015spring/05-树8
-[树8AC]:MOOC-DataStruct2015spring/05-树8.HuffmanCodes(30).c
-
-[PA2-3]:http://dsa.cs.tsinghua.edu.cn/oj/problem.shtml?id=405
-[PA2-3AC]:TsinghuaX－30240184X/MOOC-PA2/ProperRebuild.c
-[THU2-3]:http://dsa.cs.tsinghua.edu.cn/oj/problem.shtml?id=388	
 ##图
 
 
@@ -243,7 +291,45 @@
 [Pop Sequence](MOOC-DataStruct2015spring/02-线性结构3.PopSequence.c.c)
 
 
+[树1]:http://www.patest.cn/contests/mooc-ds2015spring/03-树1
+[树1AC]:MOOC-DataStruct2015spring/03-树1.ListLeaves(25).c
 
+[树2]:http://www.patest.cn/contests/mooc-ds2015spring/03-树2
+[树2AC]:MOOC-DataStruct2015spring/03-树2.TreeTraversalsAgain(25).c
+
+[树3]:http://www.patest.cn/contests/mooc-ds2015spring/04-树3
+[树3AC]:MOOC-DataStruct2015spring/04-树3.RootofAVLTree(25).c
+
+[树4]:http://www.patest.cn/contests/mooc-ds2015spring/04-树4
+[树4AC]:MOOC-DataStruct2015spring/04-树4.SearchinaBinarySearchTree(25).c
+
+[树5]:http://www.patest.cn/contests/mooc-ds2015spring/04-树5
+[树5AC]:MOOC-DataStruct2015spring/04-树5.CompleteBinarySearchTree(30).c
+
+[树6]:http://www.patest.cn/contests/mooc-ds2015spring/05-树6 
+[树6AC]:MOOC-DataStruct2015spring/05-树6.Path-in-a-Heap(25).c
+
+[树7]:http://www.patest.cn/contests/mooc-ds2015spring/05-树7
+[树7AC]:MOOC-DataStruct2015spring/05-树7.FileTransfer(25).c
+
+[树8]:http://www.patest.cn/contests/mooc-ds2015spring/05-树8
+[树8AC]:MOOC-DataStruct2015spring/05-树8.HuffmanCodes(30).c
+
+[PA2-3]:http://dsa.cs.tsinghua.edu.cn/oj/problem.shtml?id=405
+[PA2-3AC]:TsinghuaX－30240184X/MOOC-PA2/ProperRebuild.c
+[THU2-3]:http://dsa.cs.tsinghua.edu.cn/oj/problem.shtml?id=388	
+
+[poj 2431]:http://poj.org/problem?id=2431
+[2431AC]:../OnlineJudge/POJ/poj2431Expedition.c
+
+[poj 3253]:http://poj.org/problem?id=3253
+[3253AC]:../OnlineJudge/POJ/poj3253FenceRepair.c
+
+[PA4-1]:http://dsa.cs.tsinghua.edu.cn/oj/problem.shtml?id=409
+[PA4-1AC]:TsinghuaX－30240184X/MOOC-PA4/任务调度(Schedule).c
+
+[heap.c]:MOOC-DataStruct2015spring/heap.c
+[heapsort.c]:MOOC-DataStruct2015spring/heapsort.c
 
 
 
