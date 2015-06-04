@@ -7,8 +7,8 @@
 //
 
 #include <stdio.h>
-#include <stdlib.h>
 
+//小堆
 #include "heap.c"
 
 int main()

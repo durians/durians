@@ -3,56 +3,41 @@
 //
 //  Created by durians on 15/5/27.
 //
-//  堆定义
-//      小堆  k[i] <= k[2*i]，k[i] <= k[2*i+1]，i = 1,2,...,n/2
-//           less then
-//      大堆  k[i] >= k[2*i]，k[i] >= k[2*i+1]，i = 1,2,...,n/2
-//           greater then
+//堆实现优先队列
 //
-//  堆实现优先队列
-//      逻辑结构：完全二叉树结构
-//      存储结构：顺序存储
-//      常用操作：
-//          pushHeap(Heap *H, ElemType e)
-//          ElemType popHeap(Heap *H)
-//
+//  数据类型：
+//  结构(关系)：
+//      顺序存储的完全二叉树
+//          小堆  k[i] <= k[2*i]，k[i] <= k[2*i+1]，i = 1,2,...,n/2
+//          大堆  k[i] >= k[2*i]，k[i] >= k[2*i+1]，i = 1,2,...,n/2
+//  操作：
+//    pushHeap(Heap *H, ElemType e)
+//    ElemType popHeap(Heap *H)
 //
 
+
+
+
+//数据类型
 typedef int ElemType;
-int compare(ElemType a, ElemType b)
-{
-    #define GT(a,b)    (a) > (b) ? 1 : 0
-    #define LT(a,b)    (a) < (b) ? 1 : 0
-    
-    return LT(a,b);
-}
 
-typedef struct Heap
+//结构（关系）：顺序存储（动态分配数组）+ 完全二叉树
+typedef struct SqList
 {
     ElemType *elem;
     int size;
     int capacity;
 }Heap;
 
-
-#include<stdlib.h>
-Heap* createHeap(int maxsize)
+//操作：
+int compare(ElemType a, ElemType b)
 {
-    Heap* H = (Heap *)malloc(sizeof(Heap));
-    H->elem = (ElemType *)malloc(sizeof(ElemType)*(maxsize+1));
-    H->capacity = maxsize+1;
-    H->size = 0;
+#define GT(a,b)    (a) > (b) ? 1 : 0
+#define LT(a,b)    (a) < (b) ? 1 : 0
+//小堆 LT(less then)
 
-    return H;
+    return LT(a,b);
 }
-
-void destoryHeap(Heap *H)
-{
-    free(H->elem);
-    H->elem = NULL, H->size = 0, H->capacity = 0;
-    free(H);
-}
-
 
 void pushHeap(Heap *H, ElemType e)
 {
@@ -64,7 +49,6 @@ void pushHeap(Heap *H, ElemType e)
     
     H->elem[i] = e;
 }
-
 
 ElemType popHeap(Heap *H)
 {
@@ -91,6 +75,23 @@ ElemType popHeap(Heap *H)
 }
 
 
+#include<stdlib.h>
+Heap* createHeap(int maxsize)
+{
+    Heap* H = (Heap *)malloc(sizeof(Heap));
+    H->elem = (ElemType *)malloc(sizeof(ElemType)*(maxsize+1));
+    H->capacity = maxsize+1;
+    H->size = 0;
+    
+    return H;
+}
+
+void destoryHeap(Heap *H)
+{
+    free(H->elem);
+    H->elem = NULL, H->size = 0, H->capacity = 0;
+    free(H);
+}
 
 
 

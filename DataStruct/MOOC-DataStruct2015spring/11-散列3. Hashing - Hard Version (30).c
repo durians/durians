@@ -23,158 +23,79 @@
  则，[H(v[i]), i)都是v[i]的前驱
  用图来表达前驱后继，拓扑排序（多个取最小的）
  */
+
+
 #include <stdio.h>
-#include <stdlib.h>
+#define N  1000
+int n;
+int a[N],arcs[N][N],indeed[N];
 
-typedef struct _arc
-{
-    int adjv;
-    struct _arc *next;
-}Arc;
-
-typedef struct _vnode
-{
-    int data;
-    int indeed;
-    Arc *firstarc;
-}VNode;
-
-typedef struct _graphic
-{
-    VNode *v;
-    int vnum;
-}Graphic;
-
-void Destory(Graphic *G)
+void insert(int s[],int key, int n)
 {
     int i;
-    Arc *p, *q;
     
-    //free arc
-    for(i = 0; i < G->vnum; i++)
-    {
-        p = G->v[i].firstarc;
-        while(p){
-            q = p, p = p->next;
-            free(q),q = NULL;
-        }
-    }
-    //free v
-    free(G->v),G->v = NULL;
+    for(i = n-1; i >= 0 && a[key] < a[s[i]]; i--)
+        s[i+1] = s[i];
+    
+    s[i+1] = key;
 }
-
-void Create(Graphic *G)
+int del(int s[],int n)
 {
-    int i, hash;
-    Arc *newarc;
+    int i,e;
     
-    //get input
-    scanf("%d",&G->vnum);
-    G->v = (VNode *)malloc(sizeof(VNode)*G->vnum);
-    for(i = 0; i < G->vnum; i++)
-    {
-        scanf("%d",&(G->v[i].data));
-        G->v[i].indeed = (G->v[i].data >= 0) ? 0 : -1;
-        G->v[i].firstarc = NULL;
-    }
+    e = s[0],n--;
     
-    //create arc [hash, i): v[hash]-->v[i],
-    for(i = 0; i < G->vnum; i++)
-    {
-        if(G->v[i].data < 0) continue;
-        
-        for(hash = G->v[i].data % G->vnum;
-            hash != i;
-            hash = (hash + 1) % G->vnum)
-        {
-            //newarc: v[hash]-->v[i]
-            newarc = (Arc *)malloc(sizeof(Arc));
-            newarc->adjv = i, newarc->next = G->v[hash].firstarc;
-            G->v[hash].firstarc = newarc;
-            
-            G->v[i].indeed++;
-        }
-    }
-}
-
-void InsertHeap(VNode heap[], int n, VNode e)
-{
-    int i;
-    for(i = n; i/2 >= 1 && e.data < heap[i/2].data; i = i / 2)
-        heap[i] = heap[i/2];
-    heap[i] = e;
-}
-
-VNode RemoveHeap(VNode heap[], int n)
-{
-    int i = 1;
-    VNode e,t;
-    
-    e = heap[1], heap[1] = heap[n--];
-    
-    while( i < n)
-    {
-        if(2*i + 1 <= n &&
-           heap[2*i+1].data < heap[2*i].data &&
-           heap[2*i+1].data < heap[i].data)
-        {
-            t = heap[i],heap[i] = heap[2*i+1], heap[2*i+1] = t;
-            i = 2*i + 1;
-        }
-        else if(2*i <= n && heap[2*i].data < heap[i].data)
-        {
-            t = heap[i],heap[i] = heap[2*i], heap[2*i] = t;
-            i = 2*i;
-        }
-        else break;
-    }
+    for(i = 0; i < n; i++)
+        s[i] = s[i+1];
     
     return e;
 }
-void SloveByTopoSort(Graphic *G)
+void topoSort()
 {
-    int i, n = 0;
-    VNode e, *heap = (VNode *)malloc(sizeof(VNode)*G->vnum);
-    Arc *arc;
+    int s[N],top = 0, i,v;
     
-    for(i = 0; i < G->vnum; i++)
+    for(i = 0; i < n; i++)
+        if(indeed[i] == 0)
+            insert(s,i,top++);
+    
+    while(top > 0)
     {
-        if(0 == G->v[i].indeed)
-        {
-            InsertHeap(heap,++n,G->v[i]);
-        }
+        v = del(s,top--);
+        
+        for(i = 0; i < n; i++)
+            if(arcs[v][i] && --indeed[i] == 0)
+                insert(s,i,top++);
+        if(a[v] >= 0)
+            printf("%d%c",a[v],top==0?'\n':' ');
     }
     
-    while(n > 0)
-    {
-        e = RemoveHeap(heap,n--);
-        printf("%d",e.data);
-        for(arc = e.firstarc; arc!=NULL; arc = arc->next)
-        {
-            if(0 == (--G->v[arc->adjv].indeed))
-                InsertHeap(heap, ++n, G->v[arc->adjv]);
-        }
-        if(n > 0) printf(" ");
-    }
-    
-    free(heap),heap = NULL;
 }
+
+void slove()
+{
+    int i,h;
+    scanf("%d", &n);
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", a+i);
+        
+        if(a[i] < 0) continue;
+        
+        h = a[i] % n;
+        
+        while(h != i)
+        {
+            arcs[h][i] = 1;
+            h = (h + 1)%n;
+            indeed[i]++;
+        }
+    }
+    
+    topoSort();
+}
+
 int main()
 {
-    Graphic G;
-    
-    Create(&G);
-    SloveByTopoSort(&G);
-    Destory(&G);
-    
+    slove();
     return 0;
 }
-
-
-
-
-
-
-
-
-
